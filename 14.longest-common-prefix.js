@@ -7,7 +7,7 @@
  * @param {string[]} strs
  * @return {string}
  */
-var longestCommonPrefix = function(strs) {
+var longestCommonPrefix = function (strs) {
   let i = 0
   let prefix = ''
 
@@ -34,7 +34,7 @@ var longestCommonPrefix = function(strs) {
  * @param {number} i
  * @returns {boolean}
  */
-function hasTheSameChar(strs, i) {
+function hasTheSameChar (strs, i) {
   let prefix = ''
 
   for (const s of strs) {

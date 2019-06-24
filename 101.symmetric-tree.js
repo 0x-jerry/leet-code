@@ -17,16 +17,16 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isSymmetric = function(root) {
+var isSymmetric = function (root) {
   return root ? isSymmetricTree(root.left, root.right) : true
 }
 
 /**
- * 
- * @param {TreeNode} p 
- * @param {TreeNode} q 
+ *
+ * @param {TreeNode} p
+ * @param {TreeNode} q
  */
-function isSymmetricTree(p, q) {
+function isSymmetricTree (p, q) {
   if (p && q) {
     if (p.val !== q.val) {
       return false

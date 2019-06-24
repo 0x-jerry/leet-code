@@ -8,7 +8,7 @@
  * @param {string} b
  * @return {string}
  */
-var addBinary = function(a, b) {
+var addBinary = function (a, b) {
   const maxLen = Math.max(a.length, b.length)
   if (a.length > b.length) {
     b = '0'.repeat(a.length - b.length) + b

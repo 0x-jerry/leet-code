@@ -7,7 +7,7 @@
  * @param {number} x
  * @return {number}
  */
-var reverse = function(x) {
+var reverse = function (x) {
   let isMinus = false
   if (x < 0) {
     isMinus = true

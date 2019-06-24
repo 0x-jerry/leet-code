@@ -7,7 +7,7 @@
  * @param {number} x
  * @return {number}
  */
-var mySqrt = function(x) {
+var mySqrt = function (x) {
   let left = 0
   let right = x
   let mid = Math.round((left + right) / 2)

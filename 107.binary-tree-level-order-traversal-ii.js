@@ -19,7 +19,7 @@
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrderBottom = function(root) {
+var levelOrderBottom = function (root) {
   if (!root) return []
 
   const values = []
@@ -48,7 +48,7 @@ var levelOrderBottom = function(root) {
  * @param {(node:TreeNode, level:number) => any} func
  * @param {number} level
  */
-function traversalTree(root, func, level) {
+function traversalTree (root, func, level) {
   if (!root) {
     return
   }

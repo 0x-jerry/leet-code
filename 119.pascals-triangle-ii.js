@@ -7,7 +7,7 @@
  * @param {number} rowIndex
  * @return {number[]}
  */
-var getRow = function(rowIndex) {
+var getRow = function (rowIndex) {
   let line = [1]
 
   if (rowIndex === 0) {
@@ -28,7 +28,7 @@ var getRow = function(rowIndex) {
  * @param {number[]} preLine
  * @returns {number[]}
  */
-function fillTriangleNextLine(preLine) {
+function fillTriangleNextLine (preLine) {
   const line = [1]
 
   for (let i = 0; i < preLine.length; i++) {

@@ -3,14 +3,14 @@
  *
  * [121] Best Time to Buy and Sell Stock
  * Dynamic programing problem
- * 
+ *
  * profit[n] = profit[n - 1] + prices[i] - prices[i - 1]
  */
 /**
  * @param {number[]} prices
  * @return {number}
  */
-var maxProfit = function(prices) {
+var maxProfit = function (prices) {
   const maxLen = prices.length
 
   let max = 0

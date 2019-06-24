@@ -7,7 +7,7 @@
  * @param {string} s
  * @return {number}
  */
-var lengthOfLastWord = function(s) {
+var lengthOfLastWord = function (s) {
   s = s.trim()
   const len = s.length
 
@@ -17,10 +17,9 @@ var lengthOfLastWord = function(s) {
     if (c === ' ') {
       return result
     } else {
-      result ++
+      result++
     }
   }
 
   return result
 }
-

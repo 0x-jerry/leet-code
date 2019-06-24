@@ -7,10 +7,10 @@
  * @param {number[]} nums
  * @return {number}
  */
-var removeDuplicates = function(nums) {
+var removeDuplicates = function (nums) {
   let pre = nums[0]
 
-  for (let i = 1; i < nums.length; ) {
+  for (let i = 1; i < nums.length;) {
     const n = nums[i]
     if (pre === n) {
       nums.splice(i, 1)

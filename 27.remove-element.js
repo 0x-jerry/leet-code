@@ -8,8 +8,8 @@
  * @param {number} val
  * @return {number}
  */
-var removeElement = function(nums, val) {
-  for (let i = 0; i < nums.length; ) {
+var removeElement = function (nums, val) {
+  for (let i = 0; i < nums.length;) {
     const n = nums[i]
 
     if (n === val) {

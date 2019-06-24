@@ -20,7 +20,7 @@
  * @param {number} sum
  * @return {boolean}
  */
-var hasPathSum = function(root, sum) {
+var hasPathSum = function (root, sum) {
   if (!root) {
     return false
   }
@@ -42,7 +42,7 @@ var hasPathSum = function(root, sum) {
  * @param {number} sum
  * @param {(sum: number) => any} func
  */
-function pathSum(node, sum, func) {
+function pathSum (node, sum, func) {
   const subTreeSum = sum + node.val
 
   if (!node.left && !node.right) {

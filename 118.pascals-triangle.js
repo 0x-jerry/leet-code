@@ -7,7 +7,7 @@
  * @param {number} numRows
  * @return {number[][]}
  */
-var generate = function(numRows) {
+var generate = function (numRows) {
   /**
    * @type {number[][]}
    */
@@ -25,7 +25,7 @@ var generate = function(numRows) {
  * @param {number[]} preLine
  * @returns {number[]}
  */
-function fillTriangleNextLine(preLine) {
+function fillTriangleNextLine (preLine) {
   const line = [1]
 
   for (let i = 0; i < preLine.length; i++) {

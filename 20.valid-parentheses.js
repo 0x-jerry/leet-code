@@ -7,7 +7,7 @@
  * @param {string} s
  * @return {boolean}
  */
-var isValid = function(s) {
+var isValid = function (s) {
   const stack = []
 
   const units = {
@@ -33,4 +33,3 @@ var isValid = function(s) {
 
   return stack.length === 0
 }
-

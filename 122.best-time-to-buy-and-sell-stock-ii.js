@@ -7,7 +7,7 @@
  * @param {number[]} prices
  * @return {number}
  */
-var maxProfit = function(prices) {
+var maxProfit = function (prices) {
   const days = prices.length
   if (days <= 1) {
     return 0

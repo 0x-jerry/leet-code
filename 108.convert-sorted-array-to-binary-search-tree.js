@@ -19,7 +19,7 @@
  * @param {number[]} nums
  * @return {TreeNode}
  */
-var sortedArrayToBST = function(nums) {
+var sortedArrayToBST = function (nums) {
   if (nums.length === 0) {
     return null
   } else if (nums.length === 1) {
@@ -36,7 +36,7 @@ var sortedArrayToBST = function(nums) {
 }
 
 class Node {
-  constructor(val, leftChild = null, rightChild = null) {
+  constructor (val, leftChild = null, rightChild = null) {
     this.val = val
     this.left = leftChild
     this.right = rightChild

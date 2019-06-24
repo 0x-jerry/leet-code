@@ -7,7 +7,7 @@
  * @param {string} s
  * @return {number}
  */
-var lengthOfLongestSubstring = function(s) {
+var lengthOfLongestSubstring = function (s) {
   let longestLen = 0
   let subStr = ''
   s.split('').forEach((c) => {
@@ -20,9 +20,7 @@ var lengthOfLongestSubstring = function(s) {
       }
       subStr = subStr.substr(repeatIndex + 1) + c
     }
-
   })
 
   return subStr.length > longestLen ? subStr.length : longestLen
 }
-

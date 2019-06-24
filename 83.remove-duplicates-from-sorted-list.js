@@ -18,7 +18,7 @@
  * @param {ListNode} h
  * @return {ListNode}
  */
-var deleteDuplicates = function(h) {
+var deleteDuplicates = function (h) {
   const head = h
 
   let node = head

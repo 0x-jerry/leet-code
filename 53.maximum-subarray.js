@@ -12,7 +12,7 @@
  * @param {number[]} nums
  * @return {number}
  */
-var maxSubArray = function(nums) {
+var maxSubArray = function (nums) {
   let sum = 0
   let minSum = 0
   let maxSub = -Infinity
@@ -35,7 +35,7 @@ var maxSubArray = function(nums) {
  *
  * @param {number[]} nums
  */
-const solution0 = function(nums) {
+const solution0 = function (nums) {
   let result = -Infinity
 
   let sum = 0

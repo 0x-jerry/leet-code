@@ -19,14 +19,14 @@
  * @param {ListNode} l2
  * @return {ListNode}
  */
-var mergeTwoLists = function(l1, l2) {
+var mergeTwoLists = function (l1, l2) {
   let newList = null
 
   linkNode()
 
   const newListHead = newList
 
-  function linkL1() {
+  function linkL1 () {
     if (newList === null) {
       newList = l1
     } else {
@@ -36,7 +36,7 @@ var mergeTwoLists = function(l1, l2) {
     l1 = l1.next
   }
 
-  function linkL2() {
+  function linkL2 () {
     if (newList === null) {
       newList = l2
     } else {
@@ -46,7 +46,7 @@ var mergeTwoLists = function(l1, l2) {
     l2 = l2.next
   }
 
-  function linkNode() {
+  function linkNode () {
     if (l1 && l2) {
       if (l1.val < l2.val) {
         linkL1()

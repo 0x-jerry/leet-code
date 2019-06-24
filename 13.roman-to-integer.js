@@ -7,7 +7,7 @@
  * @param {string} s
  * @return {number}
  */
-var romanToInt = function(s) {
+var romanToInt = function (s) {
   // 1 I
   // 4 IV
   // 5 V
@@ -59,4 +59,3 @@ var romanToInt = function(s) {
 
   return num
 }
-

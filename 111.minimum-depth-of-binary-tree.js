@@ -18,7 +18,7 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var minDepth = function(root) {
+var minDepth = function (root) {
   if (!root) {
     return 0
   }
@@ -40,7 +40,7 @@ var minDepth = function(root) {
  * @param {number} depth
  * @param {(node:TreeNode, level:number) => any} func
  */
-function traversalTree(root, depth, func) {
+function traversalTree (root, depth, func) {
   if (!root) {
     return
   }
