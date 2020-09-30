@@ -10,16 +10,8 @@
  * @return {boolean}
  */
 var isPowerOfThree = function (n) {
-  const map = [false, true, false, true]
-  if (n <= 3) {
-    return map[n] || false
-  }
-
-  if (n % 3 !== 0) {
-    return false
-  }
-
-  return isPowerOfThree(n / 3)
+  // 3 ** 19 === 1162261467
+  return n > 0 && 1162261467 % n === 0
 }
 // @lc code=end
 
