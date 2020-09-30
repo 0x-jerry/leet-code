@@ -11,8 +11,9 @@
     "prefix": "lassert",
     "body": [
       "const assert = require('assert')",
-      "const test = (args, expect) => assert.strictEqual(func(...args), expect, String(args))",
-      "test([],false)"
+      "const test = (args, expect) => assert.strictEqual($1(...args), expect, String(args))",
+      "test([],false)",
+      "$0"
     ],
     "description": "assert"
   }
