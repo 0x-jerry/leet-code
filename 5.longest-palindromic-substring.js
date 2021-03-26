@@ -7,80 +7,45 @@
 // @lc code=start
 
 /**
- *
- * @typedef Range
- * @property {number} lIdx
- * @property {number} rIdx
- *
- * @param {number} lIdx
- * @param {number} rIdx
- * @returns {Range}
- */
-function StrRange(lIdx, rIdx) {
-  return {
-    lIdx,
-    rIdx,
-  }
-}
-
-/**
  * @param {string} s
  * @return {string}
  */
 var longestPalindrome = function (s) {
-  /**
-   * @type {Range[]}
-   */
-  const queue = []
+  let splitN = s.length
 
-  queue.push(StrRange(0, s.length))
-
-  const isPalindrome = createIsPalindrome()
-
-  while (queue.length) {
-    const range = queue.shift()
-    if (isPalindrome(s, range)) {
-      return s.slice(range.lIdx, range.rIdx)
-    }
-
-    const ls = StrRange(range.lIdx, range.rIdx - 1)
-    const rs = StrRange(range.lIdx + 1, range.rIdx)
-    queue.push(ls)
-    queue.push(rs)
-  }
-}
-
-function createIsPalindrome() {
-  const cache = new Map()
-  /**
-   *
-   * @param {string} str
-   * @param {Range} range
-   * @returns {string | false}
-   */
-  return (str, range) => {
-    // const cacheKey = `${range.lIdx}-${range.rIdx}`
-    // if (cache.has(cacheKey)) {
-    //   return cache.get(cacheKey)
-    // }
-
-    const mid = (range.rIdx - range.lIdx) / 2
-    const start = range.lIdx
-    const end = range.rIdx - 1
-
-    let result = true
-
-    for (let idx = 0; idx < mid; idx++) {
-      if (str[start + idx] !== str[end - idx]) {
-        result = false
-        break
+  do {
+    for (let idx = 0; idx <= s.length - splitN; idx++) {
+      const subStr = s.slice(idx, idx + splitN)
+      if (isPalindrome(subStr)) {
+        return subStr
       }
     }
+  } while (--splitN > 1)
 
-    // cache.set(cacheKey, result)
+  return s[0]
+}
 
-    return result
+/**
+ *
+ * @param {string} str
+ * @returns {string | false}
+ */
+
+function isPalindrome(str) {
+  const mid = (0 + str.length) / 2
+  const start = 0
+  const end = str.length - 1
+
+  let result = true
+
+  for (let idx = 0; idx < mid; idx++) {
+    if (str[start + idx] !== str[end - idx]) {
+      result = false
+      break
+    }
   }
+
+  return result
 }
 // @lc code=end
 
