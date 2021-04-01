@@ -19,8 +19,8 @@ var isMatch = function (s, p) {
     // if `p` is like patten `a*b*c*` , return true,
     // other wise, return false.
     while (p.length >= 2) {
-      const [_, patten] = p
-      if (patten !== '*') {
+      const [_, pattern] = p
+      if (pattern !== '*') {
         return false
       }
       p = p.slice(2)
@@ -30,10 +30,10 @@ var isMatch = function (s, p) {
   }
 
   const lastChar = s[s.length - 1]
-  const patten = p[p.length - 1]
+  const pattern = p[p.length - 1]
   let char = p[p.length - 2]
 
-  if (patten === '*') {
+  if (pattern === '*') {
     if (char === lastChar || char === '.') {
       // consume current char || not consume current char
       return isMatch(s.slice(0, -1), p) || isMatch(s, p.slice(0, -2))
@@ -42,7 +42,7 @@ var isMatch = function (s, p) {
     return isMatch(s, p.slice(0, -2))
   }
 
-  char = patten
+  char = pattern
 
   if (char === lastChar || char === '.') {
     return isMatch(s.slice(0, -1), p.slice(0, -1))
