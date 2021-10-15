@@ -8,7 +8,7 @@ describe('buildBinaryTree', () => {
       val: 1,
       left: null,
       right: {
-        val: 1,
+        val: 2,
         left: null,
         right: null,
       },
