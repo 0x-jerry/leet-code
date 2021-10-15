@@ -21,14 +21,22 @@ var countBits = function (n) {
   return ans
 }
 
+const cache = {}
+
 function count1(n) {
   let c = 0
 
   while (n) {
+    if (cache[n]) {
+      c += cache[n]
+      break
+    }
+
     n &= n - 1
     c++
   }
 
+  cache[n] = c
   return c
 }
 // @lc code=end
