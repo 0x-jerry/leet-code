@@ -1,18 +1,31 @@
-export function buildBinaryTree<T>(nodes: T[]): TreeNode<T> {
-  let root = null
+/**
+ * 按层级构建一棵二叉树
+ * @param values
+ * @returns
+ */
+export function buildBinaryTree<T>(values: T[]): TreeNode<T> {
+  if (!values) return null
 
-  for (const node of nodes) {
-    const c = createNode(node)
+  const insertLevelOrder = <T>(values: T[], node: TreeNode | null, idx: number) => {
+    if (values.length < idx) return null
+    const val = values[idx]
 
-    if (!root) {
-      root = c
+    if (val === undefined || val === null) return null
+
+    if (!node) {
+      node = createNode(val)
     }
+
+    node.left = insertLevelOrder(values, node.left, 2 * idx + 1)
+    node.right = insertLevelOrder(values, node.left, 2 * idx + 2)
+
+    return node
   }
 
-  return root
+  return insertLevelOrder(values, null, 0)
 }
 
-function createNode<T>(val: T, left?: TreeNode<T>, right?: TreeNode<T>): TreeNode<T> {
+export function createNode<T>(val: T, left?: TreeNode<T>, right?: TreeNode<T>): TreeNode<T> {
   return {
     val,
     left,

@@ -1,4 +1,6 @@
 {
   "files.autoSave": "afterDelay",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "jest.autoRun": "off",
+  "jest.debugCodeLens.showWhenTestStateIn": ["fail"]
 }
