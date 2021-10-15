@@ -14,4 +14,8 @@ describe('buildBinaryTree', () => {
       },
     })
   })
+
+  test('[]', () => {
+    expect(buildBinaryTree([])).toBe(null)
+  })
 })
