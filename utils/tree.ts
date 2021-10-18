@@ -4,7 +4,7 @@
  * @returns
  */
 export function buildBinaryTree<T>(values: T[]): TreeNode<T> {
-  if (!values) return null
+  if (!values.length) return null
 
   const insertLevelOrder = <T>(values: T[], node: TreeNode | null, idx: number) => {
     if (values.length < idx) return null
@@ -23,6 +23,10 @@ export function buildBinaryTree<T>(values: T[]): TreeNode<T> {
   }
 
   return insertLevelOrder(values, null, 0)
+}
+
+export function buildBinarySearchTree(values: number[]): TreeNode<number> {
+  if (!values.length) return null
 }
 
 export function createNode<T>(val: T, left?: TreeNode<T>, right?: TreeNode<T>): TreeNode<T> {
