@@ -6,25 +6,38 @@
 export function buildBinaryTree<T>(values: T[]): TreeNode<T> {
   if (!values.length) return null
 
-  const insertLevelOrder = (node: TreeNode | null, idx: number) => {
-    const val = values[idx]
+  let idx = 0
 
-    if (val === undefined || val === null) return null
+  const root = createNode(values[idx++])
 
-    if (!node) {
-      node = createNode(val)
+  const queue: TreeNode[] = [root]
+
+  while (queue.length) {
+    const node = queue.shift()
+
+    if (idx >= values.length) {
+      break
     }
 
-    node.left = insertLevelOrder(node.left, 2 * idx + 1)
-    node.right = insertLevelOrder(node.right, 2 * idx + 2)
+    const leftVal = values[idx++]
 
-    return node
+    node.left = leftVal === null ? null : createNode(leftVal)
+    if (node.left) queue.push(node.left)
+
+    if (idx >= values.length) {
+      break
+    }
+
+    const rightVal = values[idx++]
+
+    node.right = rightVal === null ? null : createNode(rightVal)
+    if (node.right) queue.push(node.right)
   }
 
-  return insertLevelOrder(null, 0)
+  return root
 }
 
-export function createNode<T>(val: T, left?: TreeNode<T>, right?: TreeNode<T>): TreeNode<T> {
+export function createNode<T>(val: T, left: TreeNode<T> = null, right: TreeNode<T> = null): TreeNode<T> {
   return {
     val,
     left,

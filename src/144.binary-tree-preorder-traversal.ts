@@ -39,6 +39,6 @@ function preorderTraversal(root: TreeNode | null): number[] {
 
 describe('reorder traversal', () => {
   test('[1,null,2,3]', () => {
-    expect(preorderTraversal(buildBinaryTree([1, null, 2, null, null, 3]))).toEqual([1, 2, 3])
+    expect(preorderTraversal(buildBinaryTree([1, null, 2, 3]))).toEqual([1, 2, 3])
   })
 })

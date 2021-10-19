@@ -44,7 +44,7 @@ function findMode(root: TreeNode | null): number[] {
 
 describe('find mode', () => {
   test('[1,null,2,2]', () => {
-    expect(findMode(buildBinaryTree([1, null, 2, null, null, 2]))).toEqual([2])
+    expect(findMode(buildBinaryTree([1, null, 2, 2]))).toEqual([2])
   })
 
   test('[0]', () => {

@@ -40,6 +40,6 @@ function postorderTraversal(root: TreeNode | null): number[] {
 
 describe('reorder traversal', () => {
   test('[1,null,2,3]', () => {
-    expect(postorderTraversal(buildBinaryTree([1, null, 2, null, null, 3]))).toEqual([3, 2, 1])
+    expect(postorderTraversal(buildBinaryTree([1, null, 2, 3]))).toEqual([3, 2, 1])
   })
 })

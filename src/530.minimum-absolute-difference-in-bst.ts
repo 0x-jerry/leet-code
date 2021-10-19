@@ -58,8 +58,6 @@ describe('get minimum difference', () => {
   })
 
   test('[0,null,2236,1277,2776,519]', () => {
-    expect(
-      getMinimumDifference(buildBinaryTree([0, null, 2236, null, null, 1277, 2776, null, null, null, null, 519]))
-    ).toBe(519)
+    expect(getMinimumDifference(buildBinaryTree([0, null, 2236, 1277, 2776, 519]))).toBe(519)
   })
 })

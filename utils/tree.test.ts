@@ -42,4 +42,28 @@ describe('buildBinaryTree', () => {
       },
     })
   })
+
+  test('[2,5,null,3,null,1,4]', () => {
+    expect(buildBinaryTree([2, 5, null, 3, null, 1, 4])).toEqual({
+      val: 2,
+      left: {
+        val: 5,
+        left: {
+          val: 3,
+          left: {
+            val: 1,
+            left: null,
+            right: null,
+          },
+          right: {
+            val: 4,
+            left: null,
+            right: null,
+          },
+        },
+        right: null,
+      },
+      right: null,
+    })
+  })
 })
