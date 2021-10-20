@@ -21,73 +21,24 @@ import { buildBinaryTree } from '../utils/tree'
  * }
  */
 
-interface NodeInfo {
-  level: number
-  node: TreeNode
-  parent: NodeInfo
-}
-
 function diameterOfBinaryTree(root: TreeNode | null): number {
-  const leafs: NodeInfo[] = []
-  let maxLevel = 0
+  let max = 0
 
-  const visit = (node: TreeNode, parent: NodeInfo | null = null) => {
-    const info: NodeInfo = {
-      level: parent ? parent.level + 1 : 0,
-      node,
-      parent,
-    }
+  const visit = (node: TreeNode) => {
+    if (!node) return 0
+    const leftHeight = visit(node.left)
+    const rightHeight = visit(node.right)
 
-    maxLevel = Math.max(maxLevel, info.level)
+    max = Math.max(max, leftHeight + rightHeight)
 
-    if (!node.left && !node.right) {
-      leafs.push(info)
-    }
-
-    if (node.left) visit(node.left, info)
-    if (node.right) visit(node.right, info)
+    return Math.max(leftHeight, rightHeight) + 1
   }
 
   visit(root)
 
-  let max = 0
-
-  for (let i = 0; i < leafs.length - 1; i++) {
-    const nodeA = leafs[i]
-
-    for (let j = i + 1; j < leafs.length; j++) {
-      const nodeB = leafs[j]
-      max = Math.max(max, diameter(nodeA, nodeB))
-      // console.log(nodeA.node.val, nodeB.node.val, max)
-    }
-  }
-
-  return Math.max(max, maxLevel)
+  return max
 }
 
-function diameter(a: NodeInfo, b: NodeInfo) {
-  let x = 0
-
-  while (a) {
-    let p = b
-
-    let y = 0
-
-    while (p) {
-      if (p.node === a.node) {
-        return x + y
-      }
-
-      p = p.parent
-      y++
-    }
-
-    x++
-    a = a.parent
-  }
-
-  return 0
-}
 // @lc code=end
 
 describe('diameter of binary tree', () => {
