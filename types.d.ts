@@ -10,6 +10,11 @@ declare global {
     left?: TreeNode<T>
     right?: TreeNode<T>
   }
+
+  interface NaryTreeNode<T = any> {
+    val: T
+    children: NaryTreeNode[]
+  }
 }
 
 export {}

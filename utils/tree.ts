@@ -44,3 +44,41 @@ export function createNode<T>(val: T, left: TreeNode<T> = null, right: TreeNode<
     right,
   }
 }
+
+export function buildNaryTree(arr: (number | null)[] = []) {
+  if (!arr.length) return null
+
+  let idx = 0
+  const root: NaryTreeNode = {
+    val: arr[idx++],
+    children: [],
+  }
+
+  const queue = [root]
+
+  while (queue.length) {
+    const node = queue.shift()
+    // skip null node
+    idx++
+
+    if (idx >= arr.length) break
+
+    for (; idx < arr.length; idx++) {
+      const val = arr[idx]
+
+      if (val === null) {
+        break
+      }
+
+      const subNode = {
+        val: val,
+        children: [],
+      }
+
+      node.children.push(subNode)
+      queue.push(subNode)
+    }
+  }
+
+  return root
+}

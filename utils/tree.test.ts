@@ -1,4 +1,4 @@
-import { buildBinaryTree } from './tree'
+import { buildBinaryTree, buildNaryTree } from './tree'
 
 describe('buildBinaryTree', () => {
   test('[1,null,2', () => {
@@ -64,6 +64,37 @@ describe('buildBinaryTree', () => {
         right: null,
       },
       right: null,
+    })
+  })
+})
+
+describe('buildNaryTree', () => {
+  test('root = [1,null,3,2,4,null,5,6]', () => {
+    expect(buildNaryTree([1, null, 3, 2, 4, null, 5, 6])).toEqual({
+      val: 1,
+      children: [
+        {
+          val: 3,
+          children: [
+            {
+              val: 5,
+              children: [],
+            },
+            {
+              val: 6,
+              children: [],
+            },
+          ],
+        },
+        {
+          val: 2,
+          children: [],
+        },
+        {
+          val: 4,
+          children: [],
+        },
+      ],
     })
   })
 })
