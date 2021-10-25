@@ -8,16 +8,20 @@
 function judgeCircle(moves: string): boolean {
   const counter = {
     L: 0,
-    R: 0,
     U: 0,
-    D: 0,
   }
 
   for (const m of moves) {
-    counter[m]++
+    if (m === 'D') {
+      counter.U--
+    } else if (m === 'R') {
+      counter.L--
+    } else {
+      counter[m]++
+    }
   }
 
-  return counter.L === counter.R && counter.U === counter.D
+  return counter.L === 0 && counter.U === 0
 }
 // @lc code=end
 
