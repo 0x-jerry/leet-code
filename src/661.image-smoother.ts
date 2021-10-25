@@ -19,7 +19,7 @@ function imageSmoother(img: number[][]): number[][] {
       }
     }
 
-    return ~~(sum / count)
+    return Math.floor(sum / count)
   }
 
   let r = []
