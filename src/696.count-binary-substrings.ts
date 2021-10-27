@@ -10,15 +10,16 @@ function countBinarySubstrings(s: string): number {
 
   for (let i = 0; i < s.length; i++) {
     const c = s[i]
-    let count = 0
+    let count = 1
 
-    for (let j = i + 1; j < s.length - count; j++) {
+    for (let j = i + 1; j <= s.length - count; j++) {
       const cc = s[j]
 
       if (cc === c) {
         count++
       } else {
-        if (!s.slice(j, j + count).includes(c)) {
+        const mirror = s.slice(j, j + count)
+        if (!mirror.includes(c)) {
           all++
         }
         break
