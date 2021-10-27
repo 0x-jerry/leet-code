@@ -2,5 +2,5 @@
   "editor.formatOnSave": true,
   // "jest.autoRun": "off",
   "jest.debugCodeLens.showWhenTestStateIn": ["fail"],
-  "jest.jestCommandLine": "./node_modules/.bin/jest"
+  "jest.jestCommandLine": "npm run test --"
 }
