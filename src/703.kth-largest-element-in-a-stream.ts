@@ -4,6 +4,8 @@
  * [703] Kth Largest Element in a Stream
  */
 
+import { testWithClass } from '../utils/classUtils'
+
 // @lc code=start
 class KthLargest {
   get largest() {
@@ -40,17 +42,19 @@ class KthLargest {
  */
 // @lc code=end
 
+const t = testWithClass(KthLargest)
+
 describe('kth largest element in a stream', () => {
   test(`["KthLargest", "add", "add", "add", "add", "add"]
   [[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]]`, () => {
-    expect(
-      testKth(['KthLargest', 'add', 'add', 'add', 'add', 'add'], [[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]])
-    ).toEqual([null, 4, 5, 5, 8, 8])
+    expect(t(['KthLargest', 'add', 'add', 'add', 'add', 'add'], [[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]])).toEqual(
+      [null, 4, 5, 5, 8, 8]
+    )
   })
 
   test(`["KthLargest","add","add","add","add","add"]
   [[1,[]],[-3],[-2],[-4],[0],[4]]`, () => {
-    expect(testKth(['KthLargest', 'add', 'add', 'add', 'add', 'add'], [[1, []], [-3], [-2], [-4], [0], [4]])).toEqual([
+    expect(t(['KthLargest', 'add', 'add', 'add', 'add', 'add'], [[1, []], [-3], [-2], [-4], [0], [4]])).toEqual([
       null,
       -3,
       -2,
@@ -60,21 +64,3 @@ describe('kth largest element in a stream', () => {
     ])
   })
 })
-
-function testKth(ops: string[], params: any[]) {
-  let r = []
-
-  let ins = null
-  ops.forEach((op, idx) => {
-    if (op === 'KthLargest') {
-      // @ts-ignore
-      ins = new KthLargest(...params[idx])
-      r.push(null)
-    } else if (op === 'add') {
-      const x = ins.add(...params[idx])
-      r.push(x)
-    }
-  })
-
-  return r
-}
