@@ -8,23 +8,37 @@
 function countBinarySubstrings(s: string): number {
   let all = 0
 
-  for (let i = 0; i < s.length; i++) {
-    const c = s[i]
-    let count = 1
+  let c = s[0]
+  const flip = () => (c === '0' ? '1' : '0')
 
-    for (let j = i + 1; j <= s.length - count; j++) {
-      const cc = s[j]
+  let count = countChar(0, c)
+  let i = count
 
-      if (cc === c) {
-        count++
-      } else {
-        const mirror = s.slice(j, j + count)
-        if (!mirror.includes(c)) {
-          all++
-        }
-        break
-      }
+  while (i < s.length) {
+    const nextC = flip()
+    const nextCount = countChar(i, nextC)
+
+    if (nextCount >= count) {
+      all += count
+    } else {
+      all += nextCount
     }
+
+    i += nextCount
+
+    count = nextCount
+    c = nextC
+  }
+
+  function countChar(start: number, char: string) {
+    let count = 0
+
+    for (let i = start; i < s.length; i++) {
+      if (s[i] === char) count++
+      else return count
+    }
+
+    return count
   }
 
   return all
