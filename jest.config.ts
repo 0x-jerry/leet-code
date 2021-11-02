@@ -6,6 +6,7 @@ const conf: Config.InitialOptions = {
     '**/src/**/*.ts',
     '**/*.test.ts',
   ],
+  testTimeout: 1000,
 }
 
 export default conf
