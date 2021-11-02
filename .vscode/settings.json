@@ -2,5 +2,9 @@
   "editor.formatOnSave": true,
   // "jest.autoRun": "off",
   "jest.debugCodeLens.showWhenTestStateIn": ["fail"],
-  "jest.jestCommandLine": "npm run test --"
+  "jest.jestCommandLine": "npm run test --",
+  "jest.autoRun": {
+    "watch": true,
+    "onSave": "test-file"
+  }
 }
