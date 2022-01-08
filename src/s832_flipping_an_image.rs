@@ -30,7 +30,7 @@ mod tests {
   use super::*;
 
   #[test]
-  fn large_group_positions1() {
+  fn flip_and_invert_image() {
     assert_eq!(
       vec![vec![1, 0, 0], vec![0, 1, 0], vec![1, 1, 1],],
       Solution::flip_and_invert_image(vec![vec![1, 1, 0], vec![1, 0, 1], vec![0, 0, 0],])
