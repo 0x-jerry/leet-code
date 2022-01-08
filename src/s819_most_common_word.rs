@@ -52,7 +52,7 @@ mod tests {
   use super::*;
 
   #[test]
-  fn test1() {
+  fn most_common_word() {
     let paragraph = "a.".to_string();
     let banned = vec![];
     assert_eq!(
@@ -62,7 +62,7 @@ mod tests {
   }
 
   #[test]
-  fn test2() {
+  fn most_common_word2() {
     let paragraph = "Bob hit a ball, the hit BALL flew far after it was hit.".to_string();
     let banned = vec!["hit".to_string()];
     assert_eq!(

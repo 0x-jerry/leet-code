@@ -53,7 +53,7 @@ mod tests {
   use super::*;
 
   #[test]
-  fn test1() {
+  fn shortest_to_char() {
     assert_eq!(
       vec![3, 2, 1, 0],
       Solution::shortest_to_char("aaab".to_string(), 'b')
@@ -61,7 +61,7 @@ mod tests {
   }
 
   #[test]
-  fn test2() {
+  fn shortest_to_char2() {
     assert_eq!(
       vec![3, 2, 1, 0, 1, 0, 0, 1, 2, 2, 1, 0],
       Solution::shortest_to_char("loveleetcode".to_string(), 'e')
@@ -69,7 +69,7 @@ mod tests {
   }
 
   #[test]
-  fn test3() {
+  fn shortest_to_char3() {
     assert_eq!(
       vec![2, 1, 0, 1],
       Solution::shortest_to_char("aaba".to_string(), 'b')

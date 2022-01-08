@@ -46,7 +46,7 @@ mod tests {
   use super::*;
 
   #[test]
-  fn test1() {
+  fn to_goat_latin() {
     assert_eq!(
       "Imaa peaksmaaa oatGmaaaa atinLmaaaaa".to_string(),
       Solution::to_goat_latin("I speak Goat Latin".to_string())

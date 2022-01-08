@@ -52,13 +52,13 @@ mod tests {
   use super::*;
 
   #[test]
-  fn test1() {
+  fn largest_triangle_area() {
     let points = vec![vec![1, 0], vec![0, 0], vec![0, 1]];
     assert_eq!(0.50000, Solution::largest_triangle_area(points));
   }
 
   #[test]
-  fn test2() {
+  fn largest_triangle_area2() {
     let points = vec![vec![4, 6], vec![6, 5], vec![3, 1]];
     assert_eq!(5.5, Solution::largest_triangle_area(points));
   }
