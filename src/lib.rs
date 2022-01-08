@@ -3,3 +3,4 @@ pub mod s819_most_common_word;
 pub mod s821_shortest_distance_to_a_character;
 pub mod s824_goat_latin;
 pub mod s830_positions_of_large_groups;
+pub mod s832_flipping_an_image;
