@@ -1,3 +1,3 @@
 {
-  "recommendations": ["orta.vscode-jest", "leetcode.vscode-leetcode"]
+  "recommendations": ["orta.vscode-jest", "leetcode.vscode-leetcode", "rust-lang.rust"]
 }
