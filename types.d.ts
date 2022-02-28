@@ -15,6 +15,11 @@ declare global {
     val: T
     children: NaryTreeNode[]
   }
+
+  interface ListNode<T = any> {
+    val: any
+    next?: ListNode<T>
+  }
 }
 
 export {}
