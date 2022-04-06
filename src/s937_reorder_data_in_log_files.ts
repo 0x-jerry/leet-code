@@ -7,7 +7,7 @@
 // @lc code=start
 function reorderLogFiles(logs: string[]): string[] {
   const digits: string[] = []
-  const words: string[] = []
+  const words: [string, string][] = []
 
   const isDigit = (n: string) => {
     return /^[^\s]+[\s\d]+$/.test(n)
@@ -17,23 +17,24 @@ function reorderLogFiles(logs: string[]): string[] {
     if (isDigit(log)) {
       digits.push(log)
     } else {
-      words.push(log)
+      const [identifier, ...content] = log.split(' ')
+      words.push([identifier, content.join(' ')])
     }
   })
 
   return [
-    ...words.sort((a, b) => {
-      const [identifierA, ...contentArrA] = a.split(' ')
-      const [identifierB, ...contentArrB] = b.split(' ')
-      const contentA = contentArrA.join(' ')
-      const contentB = contentArrB.join(' ')
+    ...words
+      .sort((a, b) => {
+        const [identifierA, contentA] = a
+        const [identifierB, contentB] = b
 
-      if (contentA === contentB) {
-        return identifierA.localeCompare(identifierB)
-      } else {
-        return contentA.localeCompare(contentB)
-      }
-    }),
+        if (contentA === contentB) {
+          return identifierA.localeCompare(identifierB)
+        } else {
+          return contentA.localeCompare(contentB)
+        }
+      })
+      .map((n) => n.join(' ')),
     ...digits,
   ]
 }
