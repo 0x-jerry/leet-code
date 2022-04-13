@@ -11,6 +11,7 @@ function prefixesDivBy5(nums: number[]): boolean[] {
   const divisibleBy = 5
   let remainder = 0
 
+  // https://www.wikiwand.com/en/Division_algorithm#/Integer_division_(unsigned)_with_remainder
   for (const bit of nums) {
     remainder = remainder << 1
     remainder = remainder | bit
