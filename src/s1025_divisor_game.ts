@@ -38,11 +38,11 @@ function divisorGame(n: number): boolean {
   // 2 => 1 x => true
 
   // 3 => 1 1 x => false
-  // 3 => 1 + 2 => false
+  // 3 => 1 + 2 => !2 => false
   // 					^ true
 
   // 4 => 1 1 1 x => true
-  // 4 => 1 + 3 => true
+  // 4 => 1 + 3 => !3 => true
   // 					^ false
 
   // 4 => 2 1 x => false
