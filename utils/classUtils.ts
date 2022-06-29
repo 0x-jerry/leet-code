@@ -13,3 +13,5 @@ export function testWithClass(Ctor: any) {
     return results
   }
 }
+
+describe('class utils', () => test.skip(''))
