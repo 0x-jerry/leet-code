@@ -6,3 +6,4 @@ pub mod s824_goat_latin;
 pub mod s830_positions_of_large_groups;
 pub mod s832_flipping_an_image;
 pub mod s836_rectangle_overlap;
+pub mod s8_string_to_integer_atoi;
