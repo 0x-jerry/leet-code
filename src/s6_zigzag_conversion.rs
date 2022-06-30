@@ -7,8 +7,6 @@
 pub struct Solution {}
 
 // @lc code=start
-use std::iter::FromIterator;
-
 impl Solution {
     pub fn convert(s: String, num_rows: i32) -> String {
         if num_rows <= 1 {
@@ -16,14 +14,13 @@ impl Solution {
         }
 
         let num_rows = num_rows as usize;
-        let len = s.len();
 
-        let chars = Vec::from_iter(s.chars());
         let mut result: Vec<Vec<char>> = vec![vec![]; num_rows];
 
         let line_size = 2 * num_rows - 2;
 
-        for idx in 0..len {
+        let mut idx = 0;
+        s.chars().for_each(|c| {
             let offset = idx % line_size;
             let row = if offset >= num_rows {
                 line_size - offset
@@ -31,8 +28,10 @@ impl Solution {
                 offset
             };
 
-            result[row].push(chars[idx])
-        }
+            result[row].push(c);
+
+            idx += 1;
+        });
 
         // ---
         let mut r = String::new();
