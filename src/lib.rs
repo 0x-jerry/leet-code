@@ -1,4 +1,5 @@
 pub mod s11_container_with_most_water;
+pub mod s12_integer_to_roman;
 pub mod s6_zigzag_conversion;
 pub mod s812_largest_triangle_area;
 pub mod s819_most_common_word;
