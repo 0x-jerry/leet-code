@@ -8,12 +8,13 @@ pub struct Solution;
 
 // @lc code=start
 use std::collections::HashMap;
+
 impl Solution {
     pub fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
-        let nums = nums;
+        let mut nums = nums;
+        nums.sort();
         //  value -> pos list
         let mut num_pos_map: HashMap<i32, Vec<usize>> = HashMap::new();
-        let mut three_sum_collection: Vec<[i32; 3]> = vec![];
 
         for (idx, num) in nums.iter().enumerate() {
             match num_pos_map.get_mut(num) {
@@ -26,23 +27,42 @@ impl Solution {
             }
         }
 
+        let mut three_sum_collection: Vec<[i32; 3]> = vec![];
+
+        let nums: Vec<i32> = num_pos_map.iter().map(|x| *x.0).collect();
+
         for idx in 0..nums.len() {
-            for jdx in (idx + 1)..nums.len() {
-                let sum = nums[idx] + nums[jdx];
-                let loop_up = 0 - sum;
+            for jdx in idx..nums.len() {
+                let n1 = nums[idx];
+                let n2 = nums[jdx];
 
-                let hit = num_pos_map.get(&loop_up);
+                if n1 == n2 && num_pos_map.get(&n1).unwrap().len() < 2 {
+                    continue;
+                }
 
-                if hit.is_some() {
-                    let x = hit.unwrap().iter().find(|x| **x != idx && **x != jdx);
-                    if x.is_some() {
-                        let mut arr = [nums[idx], nums[jdx], loop_up];
-                        arr.sort();
+                let look_up = 0 - (n1 + n2);
 
-                        if !three_sum_collection.contains(&arr) {
-                            three_sum_collection.push(arr);
+                match num_pos_map.get(&look_up) {
+                    Some(v) => {
+                        let pass = if n1 == look_up && n2 == look_up {
+                            v.len() >= 3
+                        } else if n1 == look_up || n2 == look_up {
+                            v.len() >= 2
+                        } else if n1 != look_up && n2 != look_up {
+                            true
+                        } else {
+                            false
+                        };
+
+                        if pass {
+                            let mut arr = [n1, n2, look_up];
+                            arr.sort();
+                            if !three_sum_collection.contains(&arr) {
+                                three_sum_collection.push(arr);
+                            }
                         }
                     }
+                    None => continue,
                 }
             }
         }
@@ -62,7 +82,7 @@ mod tests {
     #[test]
     fn three_sum() {
         let r = Solution::three_sum(vec![-1, 0, 1, 2, -1, -4]);
-        let e = vec![vec![-1, 0, 1], vec![-1, -1, 2]];
+        let e = vec![vec![-1, -1, 2], vec![-1, 0, 1]];
         assert_eq!(e, r)
     }
 
@@ -72,10 +92,25 @@ mod tests {
         let e: Vec<Vec<i32>> = vec![];
         assert_eq!(e, r)
     }
+
     #[test]
     fn three_sum3() {
         let r = Solution::three_sum(vec![0]);
         let e: Vec<Vec<i32>> = vec![];
+        assert_eq!(e, r)
+    }
+
+    #[test]
+    fn three_sum4() {
+        let r = Solution::three_sum(vec![0, 0, 0]);
+        let e: Vec<Vec<i32>> = vec![vec![0, 0, 0]];
+        assert_eq!(e, r)
+    }
+
+    #[test]
+    fn three_sum5() {
+        let r = Solution::three_sum(vec![0, 0, 0, 0]);
+        let e: Vec<Vec<i32>> = vec![vec![0, 0, 0]];
         assert_eq!(e, r)
     }
 }
