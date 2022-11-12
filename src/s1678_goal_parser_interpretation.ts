@@ -6,20 +6,7 @@
 
 // @lc code=start
 function interpret(command: string): string {
-  let idx = 0
-  let r = ''
-
-  while (idx < command.length) {
-    if (command.slice(idx, 1) === 'G') {
-      r += 'G'
-    } else if (command.slice(idx, 2) === '()') {
-      r += 'o'
-    } else if (command.slice(idx, 4) === '(al)') {
-      r += 'al'
-    }
-  }
-
-  return r
+  return command.replace(/(\(al\)|\(\))/g, (n) => (n === '()' ? 'o' : 'al'))
 }
 // @lc code=end
 
