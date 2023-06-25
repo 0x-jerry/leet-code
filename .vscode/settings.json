@@ -1,6 +1,5 @@
 {
   "editor.formatOnSave": true,
-  "vitest.include": ["src/**/*.ts", "utils/**/*.ts"],
   "testing.automaticallyOpenPeekView": "never",
   "testing.openTesting": "neverOpen"
 }
