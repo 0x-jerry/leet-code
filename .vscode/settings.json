@@ -1,5 +1,6 @@
 {
   "editor.formatOnSave": true,
   "testing.automaticallyOpenPeekView": "never",
-  "testing.openTesting": "neverOpen"
+  "testing.openTesting": "neverOpen",
+  "vitest.include": ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"]
 }
