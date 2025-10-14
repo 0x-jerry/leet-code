@@ -1,8 +1,6 @@
 {
   "recommendations": [
     "leetcode.vscode-leetcode",
-    "bungcip.better-toml",
-    "rust-lang.rust-analyzer",
     "ZixuanChen.vitest-explorer"
   ]
 }

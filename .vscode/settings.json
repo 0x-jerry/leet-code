@@ -2,5 +2,10 @@
   "editor.formatOnSave": true,
   "testing.automaticallyOpenPeekView": "never",
   "testing.openTesting": "neverOpen",
-  "vitest.include": ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"]
+  "vitest.include": [
+    "**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
 }
