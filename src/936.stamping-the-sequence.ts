@@ -5,129 +5,89 @@
  */
 
 // @lc code=start
-interface StampingPosition {
-  stampingTo: number
-  stampStartIdx: number
-  stampMeaningfulLength: number
-}
-
 function movesToStamp(stamp: string, target: string): number[] {
-  const stampingPos: StampingPosition[] = []
+  const firstIdx = target.indexOf(stamp)
+  const stampingPos: number[] = []
 
-  const maxSteps = 10 * target.length
-
-  let idx = target.length
-
-  let lastOne: null | StampingPosition = null
-  while (idx) {
-    const hit = findLongestSameString(stamp, target, idx)
-
-    if (hit.index === -1 || hit.length === 0) {
-      return []
-    }
-
-    const stampingTo = idx - (hit.index + hit.length)
-    idx = stampingTo
-
-    if (idx < 0) {
-      return []
-    }
-
-    const pos: StampingPosition = {
-      stampStartIdx: hit.index,
-      stampMeaningfulLength: hit.length,
-      stampingTo: stampingTo,
-    }
-
-    lastOne = pos
-
-    calcStampingPos(pos)
-
-    if (stampingPos.length > maxSteps && idx > 0) {
-      return []
-    }
+  if (firstIdx === -1) {
+    return stampingPos
   }
 
-  // > 0
-  if (lastOne?.stampStartIdx) {
-    return []
-  }
+  const maxIterCount = target.length * 10
 
-  return stampingPos.map((item) => item.stampingTo)
+  stampingPos.push(firstIdx)
 
-  function calcStampingPos(pos: StampingPosition, insertIdx: number = stampingPos.length) {
-    // 1. do not cover any other meaningful stamp pos
-    // 2. if covered, then need to adjust the stamping sequence, should insert before covered pos, then check 1 again
-    // 3. if do not have a available position, then exit
+  let l = firstIdx, r = firstIdx + stamp.length
 
-    const start = pos.stampingTo
-    const end = start + stamp.length
-
-    for (let index = 0; index < insertIdx; index++) {
-      const current = stampingPos[index]
-      const mStart = current.stampingTo + current.stampStartIdx
-      const mEnd = mStart + current.stampMeaningfulLength
-
-      if (inRange(mStart, start, end) || inRange(mEnd, start, end)) {
-        return calcStampingPos(pos, index)
+  while (true) {
+    if (l !== 0) {
+      l = moveLeft(l, 1)
+      if (l === -1) {
+        return []
       }
+      stampingPos.push(l)
     }
-
-    stampingPos.splice(insertIdx, 0, pos)
-
-    return true
-  }
-}
-
-function inRange(n: number, min: number, max: number) {
-  return n >= min && n < max
-}
-
-function findLongestSameString(stamp: string, target: string, targetEndIndex: number) {
-  let len = stamp.length + 1
-
-  while (len--) {
-    const currentS = target.slice(targetEndIndex - len, targetEndIndex)
-
-    if (!currentS) {
-      continue
-    }
-
-    const idx = stamp.indexOf(currentS)
-
-    if (idx >= 0) {
-      return {
-        length: len,
-        index: idx,
+    if (r !== target.length) {
+      r = moveRight(r, 1)
+      if (r === -1) {
+        return []
       }
+      stampingPos.push(r - stamp.length)
+    }
+
+    if (stampingPos.length > maxIterCount) {
+      return []
+    }
+
+    if (l === 0 || r === target.length) {
+      break;
     }
   }
 
-  return {
-    length: 0,
-    index: -1,
+  return stampingPos.reverse()
+
+  function moveLeft(leftEdge: number, offset: number) {
+    if (offset > stamp.length) {
+      return -1
+    }
+
+    const left = leftEdge - offset
+
+    if (left < 0) {
+      return -1
+    }
+
+    const leftStr = target.slice(left, leftEdge)
+
+    if (stamp.startsWith(leftStr)) {
+      return left
+    }
+
+    return moveLeft(leftEdge, offset + 1)
+  }
+
+  function moveRight(rightEdge: number, offset: number) {
+    if (offset > stamp.length) {
+      return -1
+    }
+
+    const right = rightEdge + offset
+
+    if (right > target.length) {
+      return -1
+    }
+
+    const rightStr = target.slice(rightEdge, right)
+
+    if (stamp.endsWith(rightStr)) {
+      return right
+    }
+
+    return moveRight(rightEdge, offset + 1)
   }
 }
+
 // @lc code=end
-
-describe('find the longest same string', () => {
-  it('ab, ccabcd', () => {
-    expect(findLongestSameString('abc', 'ccabcd', 5)).eql({
-      length: 3,
-      index: 0,
-    })
-
-    expect(findLongestSameString('abc', 'ccabcd', 4)).eql({
-      length: 2,
-      index: 0,
-    })
-
-    expect(findLongestSameString('abc', 'ababc', 2)).eql({
-      length: 2,
-      index: 0,
-    })
-  })
-})
 
 describe('move to stamp', () => {
   it('stamp = "abc", target = "ababc"', () => {
