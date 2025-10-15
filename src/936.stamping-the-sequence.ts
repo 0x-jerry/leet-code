@@ -6,184 +6,120 @@
 
 // @lc code=start
 function movesToStamp(stamp: string, target: string): number[] {
-  for (let i = 0; i <= target.length - stamp.length; i++) {
+  const result: number[] = []
 
-    if (target.slice(i, i + stamp.length) !== stamp) {
-      continue
+  const stampedMask: (boolean | string)[] = target.split('')
+
+  for (let len = stamp.length; len > 0; len--) {
+    let changed = true
+    while (changed) {
+      changed = false
+
+      for (const idx of iterIndexOf(target, stamp, len)) {
+        if (canStampOn(idx)) {
+          changed = true
+
+          stampOn(idx)
+          result.push(idx)
+        }
+      }
     }
+  }
 
-    const v = _movesToStamp(stamp, target, i)
-
-    if (v.length) {
-      return v
-    }
+  if (stampedMask.every((n) => n === true)) {
+    return result.reverse()
   }
 
   return []
 
-  function _movesToStamp(stamp: string, target: string, firstIdx: number) {
-    const stampingPos: number[] = [firstIdx]
+  function canStampOn(start: number) {
+    let canStamp = false
 
-    let l = firstIdx,
-      r = firstIdx + stamp.length
-
-    while (true) {
-
-      console.log(l, r)
-
-      if (l > 0) {
-        l = moveLeft({
-          stamp,
-          target,
-          start: l,
-        })
-
-        if (l === -1) {
-          return []
-        }
-
-        stampingPos.push(l)
+    for (let i = 0; i < stamp.length; i++) {
+      const startIdx = start + i
+      if (stampedMask[startIdx] === true) {
+        continue
       }
 
-      if (r >= 0 && r < target.length) {
-        r = moveRight({
-          stamp,
-          target,
-          start: r,
-        })
-
-        if (r === -1) {
-          return []
-        }
-
-        stampingPos.push(r - stamp.length)
+      if (stamp[i] === stampedMask[startIdx]) {
+        canStamp = true
+        continue
       }
 
-      if (l === 0 && r === target.length) {
-        break
-      }
+      return false
     }
 
-    return stampingPos.reverse()
+    return canStamp
+  }
+
+  function stampOn(start: number) {
+    for (let i = start; i < start + stamp.length; i++) {
+      stampedMask[i] = true
+    }
   }
 }
 
-function moveLeft(opt: {
-  stamp: string
-  target: string
-  start: number
-  offset?: number
-}): number {
-  const { stamp, target, start, offset = stamp.length } = opt
+function* iterIndexOf(source: string, target: string, len: number) {
+  for (let i = 0; i <= source.length - len; i++) {
+    const str = source.slice(i, i + len)
 
-  if (offset <= 0) {
-    return -1
+    for (let j = 0; j <= target.length - len; j++) {
+      if (str === target.slice(j, j + len)) {
+        if (i - j >= 0) yield i - j
+      }
+    }
   }
-
-  const left = start - offset
-
-  if (left < 0) {
-    return moveLeft({
-      ...opt,
-      offset: offset - 1
-    })
-  }
-
-  const str = target.slice(left, start)
-
-  const idx = stamp.indexOf(str)
-
-  if (idx !== -1) {
-    const _idx = left - idx
-
-    return _idx < 0 ? -1 : _idx
-  }
-
-  return moveLeft({
-    ...opt,
-    offset: offset - 1
-  })
-}
-
-function moveRight(opt: {
-  stamp: string
-  target: string
-  start: number
-  offset?: number
-}): number {
-  const { stamp, target, start, offset = stamp.length } = opt
-
-  if (offset <= 0) {
-    return -1
-  }
-
-  const right = start + offset
-
-  if (right > target.length) {
-    return moveRight({
-      ...opt,
-      offset: offset - 1
-    })
-  }
-
-  const str = target.slice(start, right)
-
-  const idx = stamp.lastIndexOf(str)
-
-  if (idx !== -1) {
-    const _idx = start - idx
-
-    return _idx + stamp.length > target.length ? -1 : _idx
-  }
-
-  return moveRight({
-    ...opt,
-    offset: offset - 1
-  })
 }
 
 // @lc code=end
 
-describe("move to stamp", () => {
+describe('move to stamp', () => {
   it('stamp = "abc", target = "ababc"', () => {
-    expect(movesToStamp("abc", "ababc")).eqls([0, 2])
+    expect(movesToStamp('abc', 'ababc')).eqls([0, 2])
   })
 
   it('stamp = "abca", target = "aabcaca"', () => {
-    expect(movesToStamp("abca", "aabcaca")).eql([3, 0, 1])
+    expect(verify('abca', 'aabcaca')).toBe(true)
   })
 
   it('stamp = "aye", target = "eyeye"', () => {
-    expect(movesToStamp("aye", "eyeye")).eql([])
+    expect(movesToStamp('aye', 'eyeye')).eql([])
   })
 
   it('stamp = "cab", target = "cabbb"', () => {
-    expect(movesToStamp("cab", "cabbb")).eql([2, 1, 0])
+    expect(movesToStamp('cab', 'cabbb')).eql([2, 1, 0])
   })
 
   it('stamp = "de", target = "ddeddeddee"', () => {
-    expect(verify("de", "ddeddeddee")).toBe(true)
+    expect(verify('de', 'ddeddeddee')).toBe(true)
   })
 
   it('stamp = "aq", target = "aqaaqaqqqaqqaaq"', () => {
-    expect(verify("aq", "aqaaqaqqqaqqaaq")).toBe(true)
+    expect(verify('aq', 'aqaaqaqqqaqqaaq')).toBe(true)
   })
 
   it('stamp = "zbs", target = "zbzbsbszbssbzbszbsss"', () => {
-    expect(verify("zbs", "zbzbsbszbssbzbszbsss")).toBe(true)
+    expect(verify('zbs', 'zbzbsbszbssbzbszbsss')).toBe(true)
   })
 
   it('stamp = "zbs", target = "zbssbzbs"', () => {
-    expect(verify("zbs", "zbssbzbs")).toBe(true)
+    expect(verify('zbs', 'zbssbzbs')).toBe(true)
+  })
+
+  it('stamp = "oz", target = "ooozz"', () => {
+    expect(verify('oz', 'ooozz')).toBe(true)
   })
 })
 
+// verify("zbs", "zbssbzbs");
+
 function verify(stamp: string, target: string) {
-  const sequnces = movesToStamp(stamp, target)
+  const sequences = movesToStamp(stamp, target)
+  console.log(sequences)
 
   const result = Array(target.length).fill(' ')
 
-  for (const n of sequnces) {
+  for (const n of sequences) {
     for (let i = 0; i < stamp.length; i++) {
       const c = stamp[i]
       const pos = n + i
