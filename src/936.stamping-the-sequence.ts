@@ -14,32 +14,8 @@ function movesToStamp(stamp: string, target: string): number[] {
 
     const v = _movesToStamp(stamp, target, i)
 
-    if (v.l === 0 && v.r === target.length && v.v.length) {
-      return v.v
-    } else if (v.v.length) {
-      let result = v.v
-
-      if (v.l > 0) {
-        const ll = movesToStamp(stamp, target.slice(0, v.l))
-
-        if (ll.length) {
-          result = [...ll, ...result]
-        } else {
-          break
-        }
-      }
-
-      if (v.r < target.length) {
-        const rr = movesToStamp(stamp, target.slice(v.r))
-
-        if (rr.length) {
-          result = [...result, ...rr.map(x => x + v.r)]
-        } else {
-          break
-        }
-      }
-
-      return result
+    if (v.length) {
+      return v
     }
   }
 
@@ -51,79 +27,119 @@ function movesToStamp(stamp: string, target: string): number[] {
     let l = firstIdx,
       r = firstIdx + stamp.length
 
-    let fl = l, fr = r
-
     while (true) {
+
+      console.log(l, r)
+
       if (l > 0) {
-        l = moveLeft(l)
+        l = moveLeft({
+          stamp,
+          target,
+          start: l,
+        })
+
         if (l === -1) {
-          continue
+          return []
         }
-        fl = l
+
         stampingPos.push(l)
       }
 
       if (r >= 0 && r < target.length) {
-        r = moveRight(r)
+        r = moveRight({
+          stamp,
+          target,
+          start: r,
+        })
+
         if (r === -1) {
-          continue
+          return []
         }
 
-        fr = r
         stampingPos.push(r - stamp.length)
       }
 
-      if ((l === 0 || l === -1) && (r === target.length || r === -1)) {
+      if (l === 0 && r === target.length) {
         break
       }
     }
 
-    return {
-      v: stampingPos.reverse(),
-      l: fl,
-      r: fr
-    }
-
-    function moveLeft(leftEdge: number, offset: number = stamp.length) {
-      if (offset <= 0) {
-        return -1
-      }
-
-      const left = leftEdge - offset
-
-      if (left < 0) {
-        return moveLeft(leftEdge, offset - 1)
-      }
-
-      const leftStr = target.slice(left, leftEdge)
-
-      if (stamp.startsWith(leftStr)) {
-        return left
-      }
-
-      return moveLeft(leftEdge, offset - 1)
-    }
-
-    function moveRight(rightEdge: number, offset: number = stamp.length) {
-      if (offset <= 0) {
-        return -1
-      }
-
-      const right = rightEdge + offset
-
-      if (right > target.length) {
-        return moveRight(rightEdge, offset - 1)
-      }
-
-      const rightStr = target.slice(rightEdge, right)
-
-      if (stamp.endsWith(rightStr)) {
-        return right
-      }
-
-      return moveRight(rightEdge, offset - 1)
-    }
+    return stampingPos.reverse()
   }
+}
+
+function moveLeft(opt: {
+  stamp: string
+  target: string
+  start: number
+  offset?: number
+}): number {
+  const { stamp, target, start, offset = stamp.length } = opt
+
+  if (offset <= 0) {
+    return -1
+  }
+
+  const left = start - offset
+
+  if (left < 0) {
+    return moveLeft({
+      ...opt,
+      offset: offset - 1
+    })
+  }
+
+  const str = target.slice(left, start)
+
+  const idx = stamp.indexOf(str)
+
+  if (idx !== -1) {
+    const _idx = left - idx
+
+    return _idx < 0 ? -1 : _idx
+  }
+
+  return moveLeft({
+    ...opt,
+    offset: offset - 1
+  })
+}
+
+function moveRight(opt: {
+  stamp: string
+  target: string
+  start: number
+  offset?: number
+}): number {
+  const { stamp, target, start, offset = stamp.length } = opt
+
+  if (offset <= 0) {
+    return -1
+  }
+
+  const right = start + offset
+
+  if (right > target.length) {
+    return moveRight({
+      ...opt,
+      offset: offset - 1
+    })
+  }
+
+  const str = target.slice(start, right)
+
+  const idx = stamp.lastIndexOf(str)
+
+  if (idx !== -1) {
+    const _idx = start - idx
+
+    return _idx + stamp.length > target.length ? -1 : _idx
+  }
+
+  return moveRight({
+    ...opt,
+    offset: offset - 1
+  })
 }
 
 // @lc code=end
@@ -155,6 +171,10 @@ describe("move to stamp", () => {
 
   it('stamp = "zbs", target = "zbzbsbszbssbzbszbsss"', () => {
     expect(verify("zbs", "zbzbsbszbssbzbszbsss")).toBe(true)
+  })
+
+  it('stamp = "zbs", target = "zbssbzbs"', () => {
+    expect(verify("zbs", "zbssbzbs")).toBe(true)
   })
 })
 
