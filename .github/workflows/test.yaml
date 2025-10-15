@@ -24,4 +24,4 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm i
-      - run: pnpm run ci:test
+      - run: pnpm run test
