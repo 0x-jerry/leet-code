@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "leetcode.vscode-leetcode",
-    "ZixuanChen.vitest-explorer"
+    "leetcode.vscode-leetcode"
   ]
 }
