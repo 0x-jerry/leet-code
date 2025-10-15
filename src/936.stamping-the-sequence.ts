@@ -146,10 +146,30 @@ describe("move to stamp", () => {
   })
 
   it('stamp = "de", target = "ddeddeddee"', () => {
-    expect(movesToStamp("de", "ddeddeddee")).eql([5, 2, 8, 6, 3, 0, 7, 4, 1])
+    expect(verify("de", "ddeddeddee")).toBe(true)
   })
 
   it('stamp = "aq", target = "aqaaqaqqqaqqaaq"', () => {
-    expect(movesToStamp("aq", "aqaaqaqqqaqqaaq")).eql([8, 11, 7, 1, 12, 10, 6, 4, 2, 13, 9, 5, 3, 0])
+    expect(verify("aq", "aqaaqaqqqaqqaaq")).toBe(true)
+  })
+
+  it('stamp = "zbs", target = "zbzbsbszbssbzbszbsss"', () => {
+    expect(verify("zbs", "zbzbsbszbssbzbszbsss")).toBe(true)
   })
 })
+
+function verify(stamp: string, target: string) {
+  const sequnces = movesToStamp(stamp, target)
+
+  const result = Array(target.length).fill(' ')
+
+  for (const n of sequnces) {
+    for (let i = 0; i < stamp.length; i++) {
+      const c = stamp[i]
+      const pos = n + i
+      result[pos] = c
+    }
+  }
+
+  return target === result.join('')
+}
