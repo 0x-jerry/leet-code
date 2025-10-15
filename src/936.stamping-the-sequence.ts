@@ -6,62 +6,83 @@
 
 // @lc code=start
 function movesToStamp(stamp: string, target: string): number[] {
+  for (let i = 0; i <= target.length - stamp.length; i++) {
 
-  for (let i = 0; i < target.length; i++) {
-
-    if (target.slice(i, i + stamp.length) === stamp) {
-      const v = _movesToStamp(stamp, target, i)
-
-      if (v.length) {
-        return v
-      }
+    if (target.slice(i, i + stamp.length) !== stamp) {
+      continue
     }
 
+    const v = _movesToStamp(stamp, target, i)
+
+    if (v.l === 0 && v.r === target.length && v.v.length) {
+      return v.v
+    } else if (v.v.length) {
+      let result = v.v
+
+      if (v.l > 0) {
+        const ll = movesToStamp(stamp, target.slice(0, v.l))
+
+        if (ll.length) {
+          result = [...ll, ...result]
+        } else {
+          break
+        }
+      }
+
+      if (v.r < target.length) {
+        const rr = movesToStamp(stamp, target.slice(v.r))
+
+        if (rr.length) {
+          result = [...result, ...rr.map(x => x + v.r)]
+        } else {
+          break
+        }
+      }
+
+      return result
+    }
   }
 
   return []
 
-  function _movesToStamp(stamp: string, target: string, firstIdx: number): number[] {
-    const stampingPos: number[] = []
-
-    if (firstIdx === -1) {
-      return stampingPos
-    }
-
-    const maxIterCount = target.length * 10
-
-    stampingPos.push(firstIdx)
+  function _movesToStamp(stamp: string, target: string, firstIdx: number) {
+    const stampingPos: number[] = [firstIdx]
 
     let l = firstIdx,
       r = firstIdx + stamp.length
+
+    let fl = l, fr = r
 
     while (true) {
       if (l > 0) {
         l = moveLeft(l)
         if (l === -1) {
-          return []
+          continue
         }
+        fl = l
         stampingPos.push(l)
       }
 
-      if (r < target.length) {
+      if (r >= 0 && r < target.length) {
         r = moveRight(r)
         if (r === -1) {
-          return []
+          continue
         }
+
+        fr = r
         stampingPos.push(r - stamp.length)
       }
 
-      if (stampingPos.length > maxIterCount) {
-        return []
-      }
-
-      if (l === 0 && r === target.length) {
+      if ((l === 0 || l === -1) && (r === target.length || r === -1)) {
         break
       }
     }
 
-    return stampingPos.reverse()
+    return {
+      v: stampingPos.reverse(),
+      l: fl,
+      r: fr
+    }
 
     function moveLeft(leftEdge: number, offset: number = stamp.length) {
       if (offset <= 0) {
