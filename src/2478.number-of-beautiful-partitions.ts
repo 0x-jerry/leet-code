@@ -6,91 +6,101 @@
 
 // @lc code=start
 function beautifulPartitions(s: string, k: number, minLength: number): number {
-  let i = 0,
-    count = 0,
-    j = 0,
-    current_len = 0,
-    len = s.length
+  const parts = getAllBeautifulParts(s).map((idx, i, arr) => ({
+    idx: idx,
+    end: arr[i + 1] ?? s.length,
+  }));
 
-  // biome-ignore lint/suspicious/noAssignInExpressions: test
-  while (i < len && (j = seekBeautiful(s, i)) && j !== -1) {
-    current_len += j - i + 1
-
-    if (current_len >= minLength) {
-      current_len = 0
-      count++
-    }
-
-    i = j + 1
+  if (parts.length < k) {
+    return 0;
   }
 
-  if (j === -1 || current_len !== 0) {
-    return 0
-  }
+  const dp: number[][] = new Array(parts.length)
+    .fill(0)
+    .map(() => Array(k - 1).fill(0));
 
-  if (count < k) {
-    return 0
-  }
+  const maxCount = 10 ** 9 + 7;
 
-  return combination(count - 1, k - 1)
-
-  function seekBeautiful(s: string, start: number): number {
-    let i = start,
-      len = s.length
-
-    if (!isPrime(s[start])) {
-      return -1
-    }
-
-    while (i < len) {
-      if (!isPrime(s[i]) && (i + 1 === len || isPrime(s[i + 1]))) {
-        return i
+  for (let kk = 0; kk < k; kk++) {
+    for (let xi = 0; xi < parts.length; xi++) {
+      if (kk === 0) {
+        const len = parts[xi].end;
+        dp[xi][kk] = len >= minLength ? 1 : 0;
+        continue;
       }
 
-      i++
+      let count = 0;
+
+      for (let x = 0; x < xi; x++) {
+        const len = parts[xi].end - parts[x].end;
+
+        if (len < minLength) {
+          continue;
+        }
+
+        count += dp[x][kk - 1];
+      }
+
+      dp[xi][kk] = count % maxCount;
     }
-
-    return -1
   }
 
-  function combination(n: number, k: number): number {
-    if (k < 0 || k > n) return 0
-    if (k === 0 || k === n) return 1
+  return dp[parts.length - 1][k - 1];
+}
 
-    // Use iterative approach to avoid large factorials
-    let result = 1
-    for (let i = 1; i <= k; i++) {
-      result = (result * (n - i + 1)) / i
+function getAllBeautifulParts(s: string): number[] {
+  let startIdx = -1;
+  const parts: number[] = [];
+
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+
+    if (startIdx === -1) {
+      if (isPrime(char)) {
+        startIdx = i;
+      } else {
+        return [];
+      }
+    } else {
+      if (!isPrime(char) && (!s[i + 1] || isPrime(s[i + 1]))) {
+        parts.push(startIdx);
+        startIdx = -1;
+      }
     }
-    return result
   }
 
-  function isPrime(n: string) {
-    return n === '2' || n === '3' || n === '5' || n === '7'
-  }
+  return startIdx === -1 ? parts : [];
+}
+
+function isPrime(n: string) {
+  return n === "2" || n === "3" || n === "5" || n === "7";
 }
 // @lc code=end
 
-describe('beautifulPartitions', () => {
-  it('23542185131, 3, 2', () => {
-    expect(beautifulPartitions('23542185131', 3, 2)).toBe(3)
-  })
+describe("beautifulPartitions", () => {
+  it("23542185131, 3, 2", () => {
+    expect(beautifulPartitions("23542185131", 3, 2)).toBe(3);
+  });
 
-  it('23542185131, 3, 3', () => {
-    expect(beautifulPartitions('23542185131', 3, 3)).toBe(1)
-  })
+  it("23542185131, 3, 3", () => {
+    expect(beautifulPartitions("23542185131", 3, 3)).toBe(1);
+  });
 
-  it('3312958, 3, 1', () => {
-    expect(beautifulPartitions('3312958', 3, 1)).toBe(1)
-  })
+  it("3312958, 3, 1", () => {
+    expect(beautifulPartitions("3312958", 3, 1)).toBe(1);
+  });
 
-  it('783938233588472343879134266968, 4, 6', () => {
-    /**
-     * 783938 | 2335884 | 723438 | 79134266968
-     * 783938 | 2335884 | 723438791 | 34266968
-     * 783938 | 2335884 | 72343879134 | 266968
-     * 783938 | 23358847234 | 3879134 | 266968
-     */
-    expect(beautifulPartitions('783938233588472343879134266968', 4, 6)).toBe(4)
-  })
-})
+  it("783938233588472343879134266968, 4, 6", () => {
+    expect(beautifulPartitions("783938233588472343879134266968", 4, 6)).toBe(4);
+  });
+
+  it("long text, 24, 2", () => {
+    expect(
+      beautifulPartitions(
+        "7753639519183359148598823162755335682921461647796985255166979917649578972791819356618496239687361868933775339936875893219782348459522657159781118588765368954599285197845124455559747963186111993765269",
+        24,
+        2,
+      ),
+    ).toBe(616385996);
+  });
+});
