@@ -17,32 +17,11 @@ function maximalRectangle(matrix: string[][]): number {
         continue
       }
 
-      if (canSafelyIgnore(x, y)) {
-        continue
-      }
-
       maxArea = Math.max(maxArea, calculateMaxArea(x, y))
     }
   }
 
   return maxArea
-
-  function canSafelyIgnore(x: number, y: number) {
-    if (x === 0 || x === lenX - 1 || y === 0 || y === lenY - 1) {
-      return false
-    }
-
-    return (
-      isValid(x - 1, y - 1) &&
-      isValid(x - 1, y) &&
-      isValid(x - 1, y + 1) &&
-      isValid(x, y - 1) &&
-      isValid(x, y + 1) &&
-      isValid(x + 1, y - 1) &&
-      isValid(x + 1, y) &&
-      isValid(x + 1, y + 1)
-    )
-  }
 
   function calculateMaxArea(x: number, y: number) {
     let area = 0
